@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -48,22 +49,31 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-    public void getAll() throws ClassNotFoundException{
+    public ArrayList getAll() throws ClassNotFoundException{
+        ArrayList<ArrayList>tempList=new ArrayList();
+        
         String sql = "SELECT * FROM `buyer`";
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeQuery();
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
+                
                 int id2 = rs.getInt("id");
-                String uss = rs.getString("fname");
-                String pass = rs.getString("lname");
-
-                System.out.format("%s, %s, %s\n", id2, uss, pass);
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                String celnum=rs.getString("celnum");
+                String dept=rs.getString("dept");
+                
+                
+                tempList.add(new ArrayList<>(Arrays.asList(fname, lname,celnum,dept)));               
+                
             }
+            System.out.println(tempList);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return tempList;
     }
 //    public void update(){
 //        String sql = "UPDATE `buyer` SET `fname`='" +fname+ "',`lname`='" + lname + "',`celnum`='" + schedule + "'WHERE cour_id = ?";

@@ -8,11 +8,13 @@ package balugo;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +23,7 @@ import javax.swing.JOptionPane;
 public class Loading extends javax.swing.JFrame {
     private boolean choosen=false;
     private Database db = new Database();
+    private ArrayList buyer=new ArrayList();
     /**
      * Creates new form Loading
      */
@@ -82,7 +85,7 @@ public class Loading extends javax.swing.JFrame {
         passUpdate = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablex = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -466,7 +469,7 @@ public class Loading extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablex.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -477,7 +480,7 @@ public class Loading extends javax.swing.JFrame {
                 "name", "cell number", "dept"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablex);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -782,13 +785,16 @@ public class Loading extends javax.swing.JFrame {
     private void SearchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchButtonMouseClicked
         // TODO add your handling code here:
         String value = dropdown.getSelectedItem().toString();
+        
         if(value.equals("All")){
             try {
-                db.getAll();
+               buyer=db.getAll();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
+        
     }//GEN-LAST:event_SearchButtonMouseClicked
 
     /**
@@ -869,7 +875,6 @@ public class Loading extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField lnameAdd;
     private javax.swing.JTextField lnameUpdate;
     private javax.swing.JButton manageButton;
@@ -880,6 +885,7 @@ public class Loading extends javax.swing.JFrame {
     private javax.swing.JTextField passUpdate;
     private javax.swing.JTextField searchBox;
     private javax.swing.JRadioButton subtractRadio;
+    private javax.swing.JTable tablex;
     private javax.swing.JButton updateButton;
     private javax.swing.JRadioButton updateRadio;
     private javax.swing.JTextField value;
