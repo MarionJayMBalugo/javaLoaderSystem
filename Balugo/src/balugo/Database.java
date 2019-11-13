@@ -166,12 +166,22 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-    public void updateAll(String id, String fnUpdate, String lnUpdate, String nUpdate, String dUpdate) throws ClassNotFoundException {
+    public void updateDept(String id,String dept) throws ClassNotFoundException {
 
-        String sql = "UPDATE `buyer` SET `fname`='" + fnUpdate + "',`lname`='" + lnUpdate + "',`celnum`='" + nUpdate + "'WHERE id = ?";
+        String sql = "UPDATE `buyer` SET `dept`='" + dept + "'WHERE id = ?";
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, Integer.valueOf(id));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void deleteAll(int id) throws ClassNotFoundException {
+        String sql = "DELETE FROM course WHERE cour_id = ?";
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
