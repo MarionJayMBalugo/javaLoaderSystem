@@ -5,6 +5,8 @@
  */
 package balugo;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
@@ -21,16 +23,32 @@ import javax.swing.table.DefaultTableModel;
  * @author 2ndyrGroupC
  */
 public class Loading extends javax.swing.JFrame {
-    private boolean choosen=false;
+
+    private boolean choosen = false;
     private Database db = new Database();
-    private ArrayList buyer=new ArrayList();
+    private ArrayList<ArrayList>buyer = new ArrayList();
+
     /**
      * Creates new form Loading
      */
     public Loading() {
 
         initComponents();
+        this.setEnabledAll(updatePanel, false);
+        this.setEnabledAll(deptPanel, false);
 
+    }
+
+    public static void setEnabledAll(Container container, boolean enabled) {
+        Component[] components = container.getComponents();
+        if (components.length > 0) {
+            for (Component component : components) {
+                component.setEnabled(enabled);
+                if (component instanceof Container) { // has to be a container to contain components
+                    setEnabledAll((Container) component, enabled); // the recursive call
+                }
+            }
+        }
     }
 
     /**
@@ -68,7 +86,7 @@ public class Loading extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         lnameAdd = new javax.swing.JTextField();
         noAdd = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
+        updatePanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -86,7 +104,7 @@ public class Loading extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablex = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
+        deptPanel = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         value = new javax.swing.JTextField();
@@ -340,7 +358,7 @@ public class Loading extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        updatePanel.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel10.setText("UPDATE");
 
@@ -359,6 +377,11 @@ public class Loading extends javax.swing.JFrame {
         jLabel17.setText("Please verify if it is you.");
 
         updateButton.setText("UPDATE");
+        updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateButtonMouseClicked(evt);
+            }
+        });
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateButtonActionPerformed(evt);
@@ -395,63 +418,63 @@ public class Loading extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout updatePanelLayout = new javax.swing.GroupLayout(updatePanel);
+        updatePanel.setLayout(updatePanelLayout);
+        updatePanelLayout.setHorizontalGroup(
+            updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(updatePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(updatePanelLayout.createSequentialGroup()
+                        .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(updatePanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(lnameUpdate))
                             .addComponent(fnameUpdate)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(updatePanelLayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(passUpdate))
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(updatePanelLayout.createSequentialGroup()
+                        .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel17))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(updatePanelLayout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(noUpdate))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(updatePanelLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(18, 18, 18)
                         .addComponent(deptUpdate)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        updatePanelLayout.setVerticalGroup(
+            updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(updatePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(fnameUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(lnameUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(noUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deptUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addGap(7, 7, 7)
@@ -459,7 +482,7 @@ public class Loading extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(passUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -471,6 +494,102 @@ public class Loading extends javax.swing.JFrame {
 
         tablex.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -538,14 +657,14 @@ public class Loading extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout deptPanelLayout = new javax.swing.GroupLayout(deptPanel);
+        deptPanel.setLayout(deptPanelLayout);
+        deptPanelLayout.setHorizontalGroup(
+            deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deptPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(deptPanelLayout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(value)
@@ -554,25 +673,25 @@ public class Loading extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(subtractRadio))
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(deptPanelLayout.createSequentialGroup()
+                        .addGroup(deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
                             .addComponent(jLabel21))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(deptPanelLayout.createSequentialGroup()
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(passDept))
                     .addComponent(manageButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        deptPanelLayout.setVerticalGroup(
+            deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deptPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18)
                 .addGap(21, 21, 21)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(subtractRadio)
@@ -582,7 +701,7 @@ public class Loading extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(deptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
                     .addComponent(passDept, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -601,8 +720,8 @@ public class Loading extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deptPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -614,9 +733,9 @@ public class Loading extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(deptPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -646,8 +765,8 @@ public class Loading extends javax.swing.JFrame {
 
     private void dropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropdownActionPerformed
         // TODO add your handling code here:
-             
-     
+
+
     }//GEN-LAST:event_dropdownActionPerformed
 
     private void deleteRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRadioActionPerformed
@@ -660,14 +779,14 @@ public class Loading extends javax.swing.JFrame {
         // TODO add your handling code here:
         updateRadio.setSelected(false);
         deleteRadio.setSelected(false);
-        
+
     }//GEN-LAST:event_deptRadioActionPerformed
 
     private void updateRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRadioActionPerformed
         // TODO add your handling code here:
-         deptRadio.setSelected(false);
+        deptRadio.setSelected(false);
         deleteRadio.setSelected(false);
-        
+
     }//GEN-LAST:event_updateRadioActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
@@ -676,31 +795,32 @@ public class Loading extends javax.swing.JFrame {
 
     private void AddButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButonActionPerformed
 
-       
         String fname = fnameAdd.getText();
         String lname = lnameAdd.getText();
         String cell = noAdd.getText();
         String dept = deptAdd.getText();
-        if(!fname.isEmpty() || ! lname.isEmpty()){
-            if(dept.isEmpty()){
-                dept="0";
+        if (!fname.isEmpty() || !lname.isEmpty()) {
+            if (dept.isEmpty()) {
+                dept = "0";
             }
-          if (cell.length() == 11) {
-            try {
-                db.addBuyer(fname, lname, cell, dept);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+            if (cell.length() == 11) {
+                try {
+                    db.addBuyer(fname, lname, cell, dept);
+                    JOptionPane.showMessageDialog(new JFrame(), "success");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                }
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "cell number must have 11 digits", "Dialog",
+                        JOptionPane.ERROR_MESSAGE);
+
             }
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "cell number must have 11 digits", "Dialog",
-                    JOptionPane.ERROR_MESSAGE);
-
-        }  
-        }else{
             JOptionPane.showMessageDialog(new JFrame(), "you must fill up either the firstname or lastname", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
+
 
     }//GEN-LAST:event_AddButonActionPerformed
 
@@ -770,12 +890,12 @@ public class Loading extends javax.swing.JFrame {
 
     private void deleteRadioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteRadioMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_deleteRadioMouseClicked
 
     private void updateRadioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateRadioMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_updateRadioMouseClicked
 
     private void deptRadioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deptRadioMouseClicked
@@ -784,18 +904,84 @@ public class Loading extends javax.swing.JFrame {
 
     private void SearchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchButtonMouseClicked
         // TODO add your handling code here:
-        String value = dropdown.getSelectedItem().toString();
         
-        if(value.equals("All")){
+        String value = dropdown.getSelectedItem().toString();
+        String query=searchBox.getText().trim();
+        if(deleteRadio.isSelected()){
+            
+        }if(updateRadio.isSelected()){
+            this.setEnabledAll(updatePanel, true);
+        }if(deptRadio.isSelected()){
+            this.setEnabledAll(deptPanel, true);
+        }
+        if (value.equals("All")) {
             try {
-               buyer=db.getAll();
+                buyer = db.getAll();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
+        if (value.equals("Name")) {
+            
+            if (query.split(" ").length == 1) {         
+                try {
+                    buyer = db.getAllByName(query);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    String[] temp = query.split(" ");           
+                    buyer = db.getAllByCompleteName(temp[0], temp[1]);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (value.equals("cell num")) {
+            try {
+                buyer = db.getAllByNumber(query);
+                System.out.println(query);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        int c = 1;
+        for (ArrayList item : buyer) {
+            tablex.setValueAt(item.get(1) +" "+ item.get(2), c, 0);
+            tablex.setValueAt(item.get(3), c, 1);
+            tablex.setValueAt(item.get(4), c, 2);
+            c++;
+        }
+
+
     }//GEN-LAST:event_SearchButtonMouseClicked
+
+    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+        // TODO add your handling code here:
+        System.out.println(buyer.toString());
+        String fnUpdate=fnameUpdate.getText().trim();
+        String lnUpdate=lnameUpdate.getText().trim();
+        String nUpdate=noUpdate.getText().trim();
+        String dUpdate=deptUpdate.getText().trim();
+        for(ArrayList item:buyer){
+            if(fnUpdate.isEmpty()){
+                fnUpdate=(String) item.get(1);
+            }if(lnUpdate.isEmpty()){
+                lnUpdate=(String) item.get(2);
+            }if(nUpdate.isEmpty()){
+                nUpdate=(String) item.get(3);
+            }if(dUpdate.isEmpty()){
+                dUpdate=(String) item.get(4);
+            }
+            try {
+                db.updateAll((String) item.get(0),fnUpdate,lnUpdate,nUpdate,dUpdate);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_updateButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -840,6 +1026,7 @@ public class Loading extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton deleteRadio;
     private javax.swing.JTextField deptAdd;
+    private javax.swing.JPanel deptPanel;
     private javax.swing.JRadioButton deptRadio;
     private javax.swing.JTextField deptUpdate;
     private javax.swing.JComboBox<String> dropdown;
@@ -871,9 +1058,7 @@ public class Loading extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lnameAdd;
     private javax.swing.JTextField lnameUpdate;
@@ -887,6 +1072,7 @@ public class Loading extends javax.swing.JFrame {
     private javax.swing.JRadioButton subtractRadio;
     private javax.swing.JTable tablex;
     private javax.swing.JButton updateButton;
+    private javax.swing.JPanel updatePanel;
     private javax.swing.JRadioButton updateRadio;
     private javax.swing.JTextField value;
     // End of variables declaration//GEN-END:variables
