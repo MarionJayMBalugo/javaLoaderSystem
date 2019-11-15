@@ -44,9 +44,9 @@ public class Database {
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
-            System.out.println("successful");
+            
         } catch (SQLException e) {
-            System.out.println("sorry");
+            
             System.out.println(e.getMessage());
         }
     }
@@ -70,7 +70,7 @@ public class Database {
                 tempList.add(new ArrayList<>(Arrays.asList(id2, fname, lname, celnum, dept)));
 
             }
-            System.out.println(tempList);
+           
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -177,11 +177,11 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-    public void deleteAll(int id) throws ClassNotFoundException {
-        String sql = "DELETE FROM course WHERE cour_id = ?";
+    public void deleteAll(String id) throws ClassNotFoundException {
+        String sql = "DELETE FROM buyer WHERE id = ?";
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, Integer.valueOf(id));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -5,6 +5,14 @@
  */
 package balugo;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.FileInputStream;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 2ndyrGroupC
@@ -16,6 +24,41 @@ public class logIn extends javax.swing.JFrame {
      */
     public logIn() {
         initComponents();
+        createAndShowGUI();
+        this.setSize(310, 200);
+        setResizable(false);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+    }
+
+    private void createAndShowGUI() {
+        setTitle("Icon image");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // First way, using Toolkit
+        // The Toolkit class contains a factory method getDefaulToolkit()
+        // which returns Toolkit object. This object contains getImage()
+        // method which takes the path of the image and returns the
+        // java.awt.Image object
+        setIconImage(Toolkit.getDefaultToolkit().getImage("Java_logo.png"));
+
+        // Second way, using ImageIcon
+        // The getImage() method returns Image instance
+        // of the ImageIcon, which is exactly what we need
+        // here
+        setIconImage(new ImageIcon("Java_logo.png").getImage());
+
+        // Third way, using ImageIO
+        try {
+            // The read(), static method of ImageIO class
+            // takes InputStream object pointing to the image file
+            setIconImage(ImageIO.read(new FileInputStream("C:/Users/balugoma_Sd2023/Downloads/lion.jpg")));
+        } catch (Exception e) {
+        }
+
+        setSize(400, 400);
+        setVisible(true);
     }
 
     /**
@@ -29,95 +72,113 @@ public class logIn extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        passField = new javax.swing.JPanel();
+        pass = new javax.swing.JPasswordField();
         logIn = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        user = new javax.swing.JTextField();
+        name = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jLabel3.setText("jLabel3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 51, 255));
+        passField.setBackground(new java.awt.Color(153, 204, 255));
+        passField.setMaximumSize(new java.awt.Dimension(400, 300));
 
-        jPasswordField1.setText("jPasswordField1");
-
+        logIn.setBackground(new java.awt.Color(0, 0, 255));
+        logIn.setForeground(new java.awt.Color(255, 255, 255));
         logIn.setText("LogIn");
         logIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 logInMouseClicked(evt);
             }
         });
+        logIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logInActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setText("jTextField1");
+        user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("jLabel1");
+        name.setText("Username");
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Password");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(logIn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jTextField1))))
-                .addContainerGap(122, Short.MAX_VALUE))
+        javax.swing.GroupLayout passFieldLayout = new javax.swing.GroupLayout(passField);
+        passField.setLayout(passFieldLayout);
+        passFieldLayout.setHorizontalGroup(
+            passFieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(passFieldLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(passFieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(name)
+                    .addComponent(jLabel2)
+                    .addGroup(passFieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(logIn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                        .addComponent(pass, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(58, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(53, 53, 53)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+        passFieldLayout.setVerticalGroup(
+            passFieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passFieldLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(name)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(logIn)
-                .addGap(93, 93, 93))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 300, Short.MAX_VALUE))
+            .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 200, Short.MAX_VALUE))
+            .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void logInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logInMouseClicked
-        Loading reg=new Loading();
-        reg.setVisible(true);
-        this.setVisible(false);
+        Loading reg = new Loading();
+        if (user.getText().trim().equals("admin") && pass.getText().trim().equals("admin")) {
+            reg.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "invalid logIn", "Dialog",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_logInMouseClicked
+
+    private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logInActionPerformed
+
+    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,13 +216,14 @@ public class logIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logIn;
+    private javax.swing.JLabel name;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JPanel passField;
+    private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }
