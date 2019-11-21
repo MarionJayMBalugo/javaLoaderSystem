@@ -822,13 +822,14 @@ public class Loading extends javax.swing.JFrame {
                         tempDept += Integer.valueOf(value.getText());
                     }
                     db.updateDept((String) item.get(0), String.valueOf(tempDept));
-                    JOptionPane.showMessageDialog(new JFrame(), "transaction complete");
+                    
                     this.setEnabledAll(deptPanel, false);
 
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            JOptionPane.showMessageDialog(new JFrame(), "transaction complete");
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
@@ -917,12 +918,13 @@ public class Loading extends javax.swing.JFrame {
                 }
                 try {
                     db.updateAll((String) item.get(0), f, l, n, d);
-                    JOptionPane.showMessageDialog(new JFrame(), "transaction success");
+                    
                     this.setEnabledAll(updatePanel, false);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            JOptionPane.showMessageDialog(new JFrame(), "transaction success");
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
@@ -1111,9 +1113,10 @@ public class Loading extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(new JFrame(), "delete complete");
+                
                 this.setEnabledAll(deletePanel, false);
             }
+            JOptionPane.showMessageDialog(new JFrame(), "delete complete");
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
