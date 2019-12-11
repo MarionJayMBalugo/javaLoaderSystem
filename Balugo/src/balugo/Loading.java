@@ -821,7 +821,7 @@ public class Loading extends javax.swing.JFrame {
                     }
                 }
                 if (isNum) {
-                    int input = JOptionPane.showConfirmDialog(null, "are you sure you want to delete?", null, JOptionPane.OK_CANCEL_OPTION);
+                    int input = JOptionPane.showConfirmDialog(null, "are you sure you want to manage debt?", null, JOptionPane.OK_CANCEL_OPTION);
                     if (input == 0) {
                         if (subtractRadio.isSelected() || addRadio.isSelected()) {
                             for (ArrayList item : buyer) {
@@ -923,6 +923,7 @@ public class Loading extends javax.swing.JFrame {
             String d = "";
             boolean isNum = true;
             boolean isDebt = true;
+            boolean isElev=true;
             if (fnUpdate.equals("") && lnUpdate.equals("") && nUpdate.equals("") && dUpdate.equals("")) {
                 JOptionPane.showMessageDialog(new JFrame(), "not a single thing is updated");
             } else {
@@ -943,50 +944,58 @@ public class Loading extends javax.swing.JFrame {
                                 break;
                             }
                         }
+
                     }
                     if (isDebt) {
-                        if (nUpdate.length() == 11) {
-                            int input = JOptionPane.showConfirmDialog(null, "are you sure you want to update?", null, JOptionPane.OK_CANCEL_OPTION);
-                            // 0=yes, 1=no, 2=cancel
-                            if (input == 0) {
-                                for (ArrayList item : buyer) {
-                                    if (fnUpdate.isEmpty()) {
-                                        f = (String) item.get(1);
-                                    } else {
-                                        f = fnUpdate;
-                                    }
-                                    if (lnUpdate.isEmpty()) {
-                                        l = (String) item.get(2);
-                                    } else {
-                                        l = lnUpdate;
-                                    }
-                                    if (nUpdate.isEmpty()) {
-                                        n = (String) item.get(3);
-                                    } else {
-                                        n = nUpdate;
-                                    }
-                                    if (dUpdate.isEmpty()) {
-                                        d = (String) item.get(4);
-                                    } else {
-                                        d = dUpdate;
-                                    }
-
-                                    try {
-                                        db.updateAll((String) item.get(0), f, l, n, d);
-
-                                        this.setEnabledAll(updatePanel, false);
-                                    } catch (ClassNotFoundException ex) {
-                                        Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-                                JOptionPane.showMessageDialog(new JFrame(), "updated successfully");
-
-                            } else {
-                                JOptionPane.showMessageDialog(new JFrame(), "user did not proceed on updating");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(new JFrame(), "contact number should be 11 digits");
+                        if(!nUpdate.equals("")){
+                            if (nUpdate.length() != 11) {
+                                isElev=false;
                         }
+                        }
+                        if(isElev){
+                            int input = JOptionPane.showConfirmDialog(null, "are you sure you want to update?", null, JOptionPane.OK_CANCEL_OPTION);
+                        // 0=yes, 1=no, 2=cancel
+                        if (input == 0) {
+                            for (ArrayList item : buyer) {
+                                if (fnUpdate.isEmpty()) {
+                                    f = (String) item.get(1);
+                                } else {
+                                    f = fnUpdate;
+                                }
+                                if (lnUpdate.isEmpty()) {
+                                    l = (String) item.get(2);
+                                } else {
+                                    l = lnUpdate;
+                                }
+                                if (nUpdate.isEmpty()) {
+                                    n = (String) item.get(3);
+                                } else {
+                                    n = nUpdate;
+                                }
+                                if (dUpdate.isEmpty()) {
+                                    d = (String) item.get(4);
+                                } else {
+                                    d = dUpdate;
+                                }
+
+                                try {
+                                    db.updateAll((String) item.get(0), f, l, n, d);
+
+                                    this.setEnabledAll(updatePanel, false);
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            JOptionPane.showMessageDialog(new JFrame(), "updated successfully");
+
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "user did not proceed on updating");
+                        }
+                        }else{
+                            JOptionPane.showMessageDialog(new JFrame(), "contact info should be 11 digits");
+                        }
+                        
+
                     } else {
                         JOptionPane.showMessageDialog(new JFrame(), "we don't accept letters in debts");
                     }
@@ -1092,9 +1101,9 @@ public class Loading extends javax.swing.JFrame {
                     ctrl.setText("");
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(new JFrame(), "you must fill up either the firstname or lastname", "Dialog",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_AddButonActionPerformed
