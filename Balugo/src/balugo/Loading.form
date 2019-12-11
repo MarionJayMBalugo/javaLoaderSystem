@@ -200,7 +200,7 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="deptRadio">
               <Properties>
-                <Property name="text" type="java.lang.String" value="DEPT MANAGEMENT"/>
+                <Property name="text" type="java.lang.String" value="DEBT MANAGEMENT"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deptRadioMouseClicked"/>
@@ -318,7 +318,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="DEPT"/>
+                <Property name="text" type="java.lang.String" value="DEBT"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="AddButon">
@@ -477,7 +477,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
-                <Property name="text" type="java.lang.String" value="DEPT"/>
+                <Property name="text" type="java.lang.String" value="DEBT"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
@@ -558,23 +558,23 @@
                   <Table columnCount="3" rowCount="100">
                     <Column editable="true" title="name" type="java.lang.Object"/>
                     <Column editable="true" title="cell number" type="java.lang.Object"/>
-                    <Column editable="true" title="dept" type="java.lang.Object"/>
+                    <Column editable="true" title="debt" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="name"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="cell number"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="dept"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
@@ -601,6 +601,9 @@
               </Border>
             </Property>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="DEBT MANAGEMENT"/>
+          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">

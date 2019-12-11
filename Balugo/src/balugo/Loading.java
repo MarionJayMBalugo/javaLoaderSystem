@@ -166,7 +166,7 @@ public class Loading extends javax.swing.JFrame {
             }
         });
 
-        deptRadio.setText("DEPT MANAGEMENT");
+        deptRadio.setText("DEBT MANAGEMENT");
         deptRadio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deptRadioMouseClicked(evt);
@@ -238,7 +238,7 @@ public class Loading extends javax.swing.JFrame {
 
         jLabel5.setText("CELL NO.");
 
-        jLabel6.setText("DEPT");
+        jLabel6.setText("DEBT");
 
         AddButon.setBackground(new java.awt.Color(0, 102, 204));
         AddButon.setForeground(new java.awt.Color(255, 255, 255));
@@ -338,7 +338,7 @@ public class Loading extends javax.swing.JFrame {
 
         jLabel13.setText("CELL NO.");
 
-        jLabel14.setText("DEPT");
+        jLabel14.setText("DEBT");
 
         jLabel15.setText("PASSWORD");
 
@@ -566,16 +566,11 @@ public class Loading extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "name", "cell number", "dept"
+                "name", "cell number", "debt"
             }
         ));
         tablex.setGridColor(new java.awt.Color(153, 0, 0));
         jScrollPane1.setViewportView(tablex);
-        if (tablex.getColumnModel().getColumnCount() > 0) {
-            tablex.getColumnModel().getColumn(0).setHeaderValue("name");
-            tablex.getColumnModel().getColumn(1).setHeaderValue("cell number");
-            tablex.getColumnModel().getColumn(2).setHeaderValue("dept");
-        }
 
         deptPanel.setBackground(new java.awt.Color(204, 229, 255));
         deptPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("DEPT MANAGEMENT"));
@@ -767,7 +762,7 @@ public class Loading extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deletePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(deptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, Short.MAX_VALUE))
                 .addContainerGap())
         );
         homeLayout.setVerticalGroup(
@@ -790,6 +785,8 @@ public class Loading extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        deptPanel.getAccessibleContext().setAccessibleName("DEBT MANAGEMENT");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -809,29 +806,58 @@ public class Loading extends javax.swing.JFrame {
     }//GEN-LAST:event_manageButtonActionPerformed
 
     private void manageButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageButtonMouseClicked
-        // TODO add your handling code here:
+
         int tempDept = 0;
         if (passDept.getText().equals("123")) {
-
-            for (ArrayList item : buyer) {
-                tempDept = Integer.valueOf((String) item.get(4));
-                try {
-                    if (subtractRadio.isSelected()) {
-                        tempDept -= Integer.valueOf(value.getText());
-                    } else {
-                        tempDept += Integer.valueOf(value.getText());
+            String val = value.getText();
+            boolean isNum = true;
+            if (val.equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "no amount inputed");
+            } else {
+                for (int counter = 0; counter < val.length(); counter++) {
+                    if (!Character.isDigit(val.charAt(counter))) {
+                        isNum = false;
+                        break;
                     }
-                    db.updateDept((String) item.get(0), String.valueOf(tempDept));
-                    
-                    this.setEnabledAll(deptPanel, false);
-
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                if (isNum) {
+                    int input = JOptionPane.showConfirmDialog(null, "are you sure you want to delete?", null, JOptionPane.OK_CANCEL_OPTION);
+                    if (input == 0) {
+                        if (subtractRadio.isSelected() || addRadio.isSelected()) {
+                            for (ArrayList item : buyer) {
+                                tempDept = Integer.valueOf((String) item.get(4));
+                                try {
+                                    if (subtractRadio.isSelected()) {
+                                        tempDept -= Integer.valueOf(value.getText());
+
+                                    } else if (addRadio.isSelected()) {
+                                        tempDept += Integer.valueOf(value.getText());
+
+                                    }
+
+                                    db.updateDept((String) item.get(0), String.valueOf(tempDept));
+
+                                    this.setEnabledAll(deptPanel, false);
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            JOptionPane.showMessageDialog(new JFrame(), "transaction complete");
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "no operation done");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(new JFrame(), "user did not proceed transaction");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "we don't accept letters in amount field");
+                }
+
             }
-            JOptionPane.showMessageDialog(new JFrame(), "transaction complete");
+
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
+            JOptionPane.showMessageDialog(new JFrame(), "wrong password", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
         }
         for (Component control : deptPanel.getComponents()) {
@@ -895,38 +921,84 @@ public class Loading extends javax.swing.JFrame {
             String l = "";
             String n = "";
             String d = "";
-            for (ArrayList item : buyer) {
-                if (fnUpdate.isEmpty()) {
-                    f = (String) item.get(1);
+            boolean isNum = true;
+            boolean isDebt = true;
+            if (fnUpdate.equals("") && lnUpdate.equals("") && nUpdate.equals("") && dUpdate.equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "not a single thing is updated");
+            } else {
+                if (!nUpdate.equals("")) {
+                    for (int counter = 0; counter < nUpdate.length(); counter++) {
+                        if (!Character.isDigit(nUpdate.charAt(counter))) {
+                            isNum = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isNum) {
+                    if (!dUpdate.equals("")) {
+                        for (int counter = 0; counter < dUpdate.length(); counter++) {
+                            if (!Character.isDigit(dUpdate.charAt(counter))) {
+                                isDebt = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (isDebt) {
+                        if (nUpdate.length() == 11) {
+                            int input = JOptionPane.showConfirmDialog(null, "are you sure you want to update?", null, JOptionPane.OK_CANCEL_OPTION);
+                            // 0=yes, 1=no, 2=cancel
+                            if (input == 0) {
+                                for (ArrayList item : buyer) {
+                                    if (fnUpdate.isEmpty()) {
+                                        f = (String) item.get(1);
+                                    } else {
+                                        f = fnUpdate;
+                                    }
+                                    if (lnUpdate.isEmpty()) {
+                                        l = (String) item.get(2);
+                                    } else {
+                                        l = lnUpdate;
+                                    }
+                                    if (nUpdate.isEmpty()) {
+                                        n = (String) item.get(3);
+                                    } else {
+                                        n = nUpdate;
+                                    }
+                                    if (dUpdate.isEmpty()) {
+                                        d = (String) item.get(4);
+                                    } else {
+                                        d = dUpdate;
+                                    }
+
+                                    try {
+                                        db.updateAll((String) item.get(0), f, l, n, d);
+
+                                        this.setEnabledAll(updatePanel, false);
+                                    } catch (ClassNotFoundException ex) {
+                                        Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(new JFrame(), "updated successfully");
+
+                            } else {
+                                JOptionPane.showMessageDialog(new JFrame(), "user did not proceed on updating");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "contact number should be 11 digits");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(new JFrame(), "we don't accept letters in debts");
+                    }
+
                 } else {
-                    f = fnUpdate;
+                    JOptionPane.showMessageDialog(new JFrame(), "we don't accept letters in contact number");
                 }
-                if (lnUpdate.isEmpty()) {
-                    l = (String) item.get(2);
-                } else {
-                    l = lnUpdate;
-                }
-                if (nUpdate.isEmpty()) {
-                    n = (String) item.get(3);
-                } else {
-                    n = nUpdate;
-                }
-                if (dUpdate.isEmpty()) {
-                    d = (String) item.get(4);
-                } else {
-                    d = dUpdate;
-                }
-                try {
-                    db.updateAll((String) item.get(0), f, l, n, d);
-                    
-                    this.setEnabledAll(updatePanel, false);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
             }
-            JOptionPane.showMessageDialog(new JFrame(), "transaction success");
+
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
+            JOptionPane.showMessageDialog(new JFrame(), "wrong password", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
         }
         for (Component control : updatePanel.getComponents()) {
@@ -959,32 +1031,70 @@ public class Loading extends javax.swing.JFrame {
         String lname = lnameAdd.getText();
         String cell = noAdd.getText();
         String dept = deptAdd.getText();
+        boolean isNum = true;
+        boolean isDept = true;
         if (!fname.isEmpty() || !lname.isEmpty()) {
             if (dept.isEmpty()) {
                 dept = "0";
             }
-            if (cell.length() == 11) {
-                try {
-                    db.addBuyer(fname, lname, cell, dept);
-                    JOptionPane.showMessageDialog(new JFrame(), "success");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
-
-                }
+            if (cell.equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "contact info is required");
             } else {
-                JOptionPane.showMessageDialog(new JFrame(), "cell number must have 11 digits", "Dialog",
-                        JOptionPane.ERROR_MESSAGE);
+                for (int counter = 0; counter < cell.length(); counter++) {
+                    if (!Character.isDigit(cell.charAt(counter))) {
+                        isNum = false;
+                        break;
+                    }
+                }
+                if (isNum) {
+                    if (cell.length() == 11) {
+                        if (!dept.equals("")) {
+                            for (int counter = 0; counter < dept.length(); counter++) {
+                                if (!Character.isDigit(dept.charAt(counter))) {
+                                    isDept = false;
+                                    break;
+                                }
+                            }
 
+                        }
+                        if (isDept) {
+                            int input = JOptionPane.showConfirmDialog(null, "are you sure you want to add?", null, JOptionPane.OK_CANCEL_OPTION);
+                            // 0=yes, 1=no, 2=cancel
+                            if (input == 0) {
+                                try {
+                                    db.addBuyer(fname, lname, cell, dept);
+                                    JOptionPane.showMessageDialog(new JFrame(), "info added");
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(new JFrame(), "The user did not proceed in adding");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "debt does not  accept letter");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(new JFrame(), "contact info must have 11 digits", "Dialog",
+                                JOptionPane.ERROR_MESSAGE);
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "letters in contact field is discouraged", "Dialog",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } else {
+
+            for (Component control : addPanel.getComponents()) {
+                if (control instanceof JTextField) {
+                    JTextField ctrl = (JTextField) control;
+                    ctrl.setText("");
+                }
+            }
+        }else{
             JOptionPane.showMessageDialog(new JFrame(), "you must fill up either the firstname or lastname", "Dialog",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        for (Component control : addPanel.getComponents()) {
-            if (control instanceof JTextField) {
-                JTextField ctrl = (JTextField) control;
-                ctrl.setText("");
-            }
+                            JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_AddButonActionPerformed
@@ -1107,26 +1217,34 @@ public class Loading extends javax.swing.JFrame {
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
         // TODO add your handling code here:
         if (passDelete.getText().equals("123")) {
-            for (ArrayList item : buyer) {
-                try {
-                    db.deleteAll((String) item.get(0));
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+            int input = JOptionPane.showConfirmDialog(null, "are you sure you want to delete?", null, JOptionPane.OK_CANCEL_OPTION);
+            // 0=yes, 1=no, 2=cancel
+            if (input == 0) {
+                for (ArrayList item : buyer) {
+                    try {
+                        db.deleteAll((String) item.get(0));
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    this.setEnabledAll(deletePanel, false);
                 }
-                
-                this.setEnabledAll(deletePanel, false);
+                JOptionPane.showMessageDialog(new JFrame(), "delete complete");
+                for (Component control : deletePanel.getComponents()) {
+                    if (control instanceof JTextField) {
+                        JTextField ctrl = (JTextField) control;
+                        ctrl.setText("");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "user did not proceed");
             }
-            JOptionPane.showMessageDialog(new JFrame(), "delete complete");
+
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "illegal transaction", "Dialog",
+            JOptionPane.showMessageDialog(new JFrame(), "incorrect password", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
         }
-        for (Component control : deletePanel.getComponents()) {
-            if (control instanceof JTextField) {
-                JTextField ctrl = (JTextField) control;
-                ctrl.setText("");
-            }
-        }
+
     }//GEN-LAST:event_deleteMouseClicked
 
     private void passDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passDeleteActionPerformed
