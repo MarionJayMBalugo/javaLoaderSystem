@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -157,7 +158,7 @@ public class Database {
 
     public void updateAll(String id, String fnUpdate, String lnUpdate, String nUpdate, String dUpdate) throws ClassNotFoundException {
 
-        String sql = "UPDATE `buyer` SET `fname`='" + fnUpdate + "',`lname`='" + lnUpdate + "',`celnum`='" + nUpdate + "'WHERE id = ?";
+        String sql = "UPDATE `buyer` SET `fname`='" + fnUpdate + "',`lname`='" + lnUpdate + "',`celnum`='" + nUpdate + "',`dept`='" + dUpdate + "'WHERE id = ?";
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, Integer.valueOf(id));

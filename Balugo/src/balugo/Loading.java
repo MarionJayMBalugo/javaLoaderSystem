@@ -979,8 +979,8 @@ public class Loading extends javax.swing.JFrame {
                                 }
 
                                 try {
+                                    System.out.println(d);
                                     db.updateAll((String) item.get(0), f, l, n, d);
-
                                     this.setEnabledAll(updatePanel, false);
                                 } catch (ClassNotFoundException ex) {
                                     Logger.getLogger(Loading.class.getName()).log(Level.SEVERE, null, ex);
